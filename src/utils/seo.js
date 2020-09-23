@@ -1,32 +1,24 @@
-/**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+import React from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
+import { graphql, useStaticQuery } from "gatsby";
 
-import React from "react"
-import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
-
-function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
+const SEO = ({ description, lang, meta, title, type = "website" }) => {
+  const { site } = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+          siteUrl
+          author
         }
       }
-    `
-  )
+    }
+  `);
 
-  const metaDescription = description || site.siteMetadata.description
-  const defaultTitle = site.siteMetadata?.title
+  const metaDescription = description || site.siteMetadata.description;
+  const defaultTitle = site.siteMetadata?.title;
 
   return (
     <Helmet
@@ -35,10 +27,24 @@ function SEO({ description, lang, meta, title }) {
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      link={[
+        {
+          rel: `canonical`,
+          href: site.siteMetadata?.siteUrl,
+        },
+      ]}
       meta={[
         {
           name: `description`,
           content: metaDescription,
+        },
+        {
+          name: `author`,
+          content: site.siteMetadata.author,
+        },
+        {
+          name: `robots`,
+          content: `index, follow`,
         },
         {
           property: `og:title`,
@@ -50,7 +56,11 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: type,
+        },
+        {
+          property: `og:url`,
+          content: site.siteMetadata.siteUrl,
         },
         {
           name: `twitter:card`,
@@ -70,20 +80,21 @@ function SEO({ description, lang, meta, title }) {
         },
       ].concat(meta)}
     />
-  )
-}
+  );
+};
 
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
-}
+};
 
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
-}
+  type: PropTypes.string,
+};
 
-export default SEO
+export default SEO;

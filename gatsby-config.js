@@ -1,8 +1,13 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Unitech - Pest and termite control`,
+    description: `Unitech Pest and Bed Bug Services is a full service, professional pest management company located in St. Louis, Missouri.  We stand prepared to eliminate unwanted pests in your home or business. Our fast, curteous and professional staff will listen to your concerns and promptly answer any questions you have regarding our methods of pest removal and the costs associated with it.`,
+    author: `Nectbox`,
+    siteUrl: "https://www.unitechpest.com",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -18,17 +23,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Unitech - Pest and termite control`,
+        short_name: `Unitech`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#002F34`,
+        theme_color: `#6AF0B0`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/icon.png`,
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
+    `gatsby-plugin-styled-components`,
     // `gatsby-plugin-offline`,
   ],
-}
+};
